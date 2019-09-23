@@ -24,6 +24,7 @@
           <e p="DeDuplicationViewModel.cs" t="Include" />
         </e>
         <e p="DispatcherObservableCollection.cs" t="Include" />
+        <e p="EnumToBoolean.cs" t="Include" />
         <e p="EtAlii.PhotoShuffle.csproj" t="IncludeRecursive" />
         <e p="EtAlii.PhotoShuffle.csproj.DotSettings" t="Include" />
         <e p="IAsyncCommand.cs" t="Include" />

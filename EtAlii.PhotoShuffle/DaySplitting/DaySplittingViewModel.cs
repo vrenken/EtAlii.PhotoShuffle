@@ -18,7 +18,10 @@ namespace EtAlii.PhotoShuffle
 
         public bool AddYearToFolderName { get => _addYearToFolderName; set => SetProperty(ref _addYearToFolderName, value); }
         private bool _addYearToFolderName = true;
-            
+
+        public TimeStampSource TimeStampSource { get => _timeStampSource; set => SetProperty(ref _timeStampSource, value); }
+        private TimeStampSource _timeStampSource = TimeStampSource.MetaData;
+
         public DispatcherObservableCollection<string> Output { get; }
         private readonly ObservableCollection<string> _output;
         
@@ -83,7 +86,7 @@ namespace EtAlii.PhotoShuffle
 //            return Task.Run(() =>
 //            {
                 var process = new DaySplittingProcess();
-                await process.Execute(Source, _output, AddMonthToFolderName, AddYearToFolderName, commit);
+                await process.Execute(Source, _output, AddMonthToFolderName, AddYearToFolderName, TimeStampSource, commit);
 //            });
         }
 

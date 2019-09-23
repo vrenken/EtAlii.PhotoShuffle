@@ -6,6 +6,11 @@
         xmlns:photoShuffle="clr-namespace:EtAlii.PhotoShuffle"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=photoShuffle:DaySplittingViewModel, IsDesignTimeCreatable=True}">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <photoShuffle:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
@@ -22,10 +27,16 @@
                 <TextBox Grid.Column="0" Text="{Binding Source, UpdateSourceTrigger=PropertyChanged}" />
                 <Button Grid.Column="1" Content="..." Command="{Binding SelectSourceCommand}" />
             </Grid>
-            <TextBlock>Timestamp</TextBlock>
-            <RadioButton GroupName="TimeStamp" IsEnabled="False" IsChecked="True">Taken timestamp (Exif)</RadioButton>
-            <RadioButton GroupName="TimeStamp" IsEnabled="False">Use created timestamp</RadioButton>
-            <RadioButton GroupName="TimeStamp" IsEnabled="False">Use filename timestamp</RadioButton>
+            <TextBlock>Timestamp source</TextBlock>
+            <RadioButton 
+                GroupName="TimeStampSource" 
+                IsChecked="{Binding TimeStampSource, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static photoShuffle:TimeStampSource.MetaData}}">Meta data</RadioButton>
+            <RadioButton 
+                GroupName="TimeStampSource"  
+                IsChecked="{Binding TimeStampSource, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static photoShuffle:TimeStampSource.FileName}}">Filename</RadioButton>
+            <RadioButton 
+                GroupName="TimeStampSource" IsEnabled="False" 
+                IsChecked="{Binding TimeStampSource, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static photoShuffle:TimeStampSource.OperatingSystem}}">OS timestamps</RadioButton>
             
             <TextBlock>Folder name</TextBlock>
             <RadioButton GroupName="FolderName" IsChecked="False" IsEnabled="False" >Use day as folder name</RadioButton>
