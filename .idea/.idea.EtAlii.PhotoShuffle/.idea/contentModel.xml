@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Git\Github\Vrenken\EtAlii.PhotoShuffle" t="IncludeFlat">
+      <e p=".gitignore" t="Include" />
+      <e p="_Globals" t="Include" />
+      <e p="EtAlii.PhotoShuffle" t="IncludeRecursive">
+        <e p="App.xaml" t="Include" />
+        <e p="App.xaml.cs" t="Include" />
+        <e p="AsyncCommand.cs" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="BindableBase.cs" t="Include" />
+        <e p="DeDuplication" t="Include">
+          <e p="DeDuplicationPanel.xaml" t="Include" />
+          <e p="DeDuplicationPanel.xaml.cs" t="Include" />
+          <e p="DeDuplicationProcess.cs" t="Include" />
+          <e p="DeDuplicationViewModel.cs" t="Include" />
+          <e p="DeDuplicationViewModel.DeDuplicate.cs" t="Include" />
+        </e>
+        <e p="EtAlii.PhotoShuffle.csproj" t="IncludeRecursive" />
+        <e p="EtAlii.PhotoShuffle.csproj.DotSettings" t="Include" />
+        <e p="IAsyncCommand.cs" t="Include" />
+        <e p="IErrorHandler.cs" t="Include" />
+        <e p="ListBoxBehavior.cs" t="Include" />
+        <e p="MainWindow.xaml" t="Include" />
+        <e p="MainWindow.xaml.cs" t="Include" />
+        <e p="MainWindowViewModel.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.0" t="Include">
+              <e p="EtAlii.PhotoShuffle.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Task.Extensions.cs" t="Include" />
+      </e>
+      <e p="EtAlii.PhotoShuffle.sln" t="IncludeFlat" />
+      <e p="Global.json" t="Include" />
+      <e p="packages" t="ExcludeRecursive" />
+    </e>
+    <e p="C:\Users\vrenk\.Rider2019.2\config\extensions" t="IncludeRecursive" />
+    <e p="C:\Users\vrenk\.Rider2019.2\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\vrenk\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_EtAlii.PhotoShuffle.-1462971593.00" t="ExcludeRecursive" />
+  </component>
+</project>

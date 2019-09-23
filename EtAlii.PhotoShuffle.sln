@@ -1,0 +1,21 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EtAlii.PhotoShuffle", "EtAlii.PhotoShuffle\EtAlii.PhotoShuffle.csproj", "{9AF518B8-93CA-4F8A-80C6-43A50B68E5A7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Globals", "_Globals", "{1E2DE858-4132-49D0-84BD-B21D7C113944}"
+ProjectSection(SolutionItems) = preProject
+	Global.json = Global.json
+	.gitignore = .gitignore
+EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9AF518B8-93CA-4F8A-80C6-43A50B68E5A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AF518B8-93CA-4F8A-80C6-43A50B68E5A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AF518B8-93CA-4F8A-80C6-43A50B68E5A7}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+	EndGlobalSection
+EndGlobal
