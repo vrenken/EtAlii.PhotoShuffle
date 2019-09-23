@@ -8,33 +8,35 @@ namespace EtAlii.PhotoShuffle
     using System.Threading.Tasks;
     using Microsoft.WindowsAPICodePack.Dialogs;
     
-    public class DeDuplicationViewModel : BindableBase, IErrorHandler
+    public class DaySplittingViewModel : BindableBase, IErrorHandler
     {
         public string Source { get => _source; set => SetProperty(ref _source, value); }
         private string _source;
-        public string Target { get => _target; set => SetProperty(ref _target, value); }
-        private string _target;
 
-        public bool OnlyMatchSimilarSizedFiles { get => _onlyMatchSimilarSizedFiles; set => SetProperty(ref _onlyMatchSimilarSizedFiles, value); }
-        private bool _onlyMatchSimilarSizedFiles = true;
+        public bool AddMonthToFolderName { get => _addMonthToFolderName; set => SetProperty(ref _addMonthToFolderName, value); }
+        private bool _addMonthToFolderName;
 
-        public ObservableCollection<string> Output { get; } = new ObservableCollection<string>();
+        public bool AddYearToFolderName { get => _addYearToFolderName; set => SetProperty(ref _addYearToFolderName, value); }
+        private bool _addYearToFolderName = true;
+            
+        public DispatcherObservableCollection<string> Output { get; }
+        private readonly ObservableCollection<string> _output;
         
-        public AsyncCommand TestDeDuplicationCommand { get; }
-        public AsyncCommand DeDuplicateCommand { get; }
-
+        public AsyncCommand TestDaySplitCommand { get; }
+        public AsyncCommand DaySplitCommand { get; }
         public IAsyncCommand SelectSourceCommand { get; }
-        
-        public IAsyncCommand SelectTargetCommand { get; }
-        public DeDuplicationViewModel()
+
+        public DaySplittingViewModel()
         {
-            TestDeDuplicationCommand = new AsyncCommand(() => DeDuplicate(false), CanDeDuplicate, this);
-            DeDuplicateCommand = new AsyncCommand(DeDuplicate, CanDeDuplicate, this);
+            TestDaySplitCommand = new AsyncCommand(() => DaySplit(false), CanDaySplit, this);
+            DaySplitCommand = new AsyncCommand(DaySplit, CanDaySplit, this);
             
             SelectSourceCommand = new AsyncCommand(() => Select(() => Source, value => Source = value));
-            SelectTargetCommand = new AsyncCommand(() => Select(() => Target, value => Target = value));
 
             PropertyChanged += OnPropertyChanged;
+            
+            _output = new ObservableCollection<string>();
+            Output = new DispatcherObservableCollection<string>(_output);
         }
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -42,9 +44,8 @@ namespace EtAlii.PhotoShuffle
             switch (e.PropertyName)
             {
                 case nameof(Source):
-                case nameof(Target):
-                    DeDuplicateCommand.RaiseCanExecuteChanged();
-                    TestDeDuplicationCommand.RaiseCanExecuteChanged();
+                    DaySplitCommand.RaiseCanExecuteChanged();
+                    TestDaySplitCommand.RaiseCanExecuteChanged();
                     break;
             }
         }
@@ -54,7 +55,7 @@ namespace EtAlii.PhotoShuffle
             var sb = new StringBuilder();
             sb.AppendLine(ex.Message);                    
             sb.AppendLine(ex.StackTrace);                    
-            Output.Add(sb.ToString());
+            _output.Add(sb.ToString());
         }
 
         private Task Select(Func<string> getter, Action<string> setter)
@@ -72,25 +73,25 @@ namespace EtAlii.PhotoShuffle
             return Task.CompletedTask;
         }
         
-        private Task DeDuplicate()
+        private Task DaySplit()
         {
-            return DeDuplicate(true);
+            return DaySplit(true);
         }
 
-        private Task DeDuplicate(bool commit)
+        private async Task DaySplit(bool commit)
         {
-            var process = new DeDuplicationProcess();
-            return process.Execute(Source, Target, Output, OnlyMatchSimilarSizedFiles, commit);
+//            return Task.Run(() =>
+//            {
+                var process = new DaySplittingProcess();
+                await process.Execute(Source, _output, AddMonthToFolderName, AddYearToFolderName, commit);
+//            });
         }
 
-        private bool CanDeDuplicate()
+        private bool CanDaySplit()
         {
             var prerequisitesMet = 
                 ! string.IsNullOrWhiteSpace(Source) &
-                ! string.IsNullOrWhiteSpace(Target) &
-                Source != Target &
-                Directory.Exists(Source) &
-                Directory.Exists(Target);
+                Directory.Exists(Source);
             return prerequisitesMet;
         }
     }

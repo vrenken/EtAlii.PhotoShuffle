@@ -11,6 +11,9 @@
     <TabItem Header="De-duplicator">
         <photoShuffle:DeDuplicationPanel DataContext="{Binding DeDuplication}"/>
     </TabItem>
+    <TabItem Header="Day-splitting">
+        <photoShuffle:DaySplittingPanel DataContext="{Binding DaySplitting}"/>
+    </TabItem>
 </TabControl>
     </Grid>
 </Window>  

@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="EtAlii.PhotoShuffle.DaySplittingPanel"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:photoShuffle="clr-namespace:EtAlii.PhotoShuffle"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=photoShuffle:DaySplittingViewModel, IsDesignTimeCreatable=True}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="11" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" Orientation="Vertical">
+            <TextBlock Text="Source" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="30" />
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" Text="{Binding Source, UpdateSourceTrigger=PropertyChanged}" />
+                <Button Grid.Column="1" Content="..." Command="{Binding SelectSourceCommand}" />
+            </Grid>
+            <TextBlock>Timestamp</TextBlock>
+            <RadioButton GroupName="TimeStamp" IsEnabled="False" IsChecked="True">Taken timestamp (Exif)</RadioButton>
+            <RadioButton GroupName="TimeStamp" IsEnabled="False">Use created timestamp</RadioButton>
+            <RadioButton GroupName="TimeStamp" IsEnabled="False">Use filename timestamp</RadioButton>
+            
+            <TextBlock>Folder name</TextBlock>
+            <RadioButton GroupName="FolderName" IsChecked="False" IsEnabled="False" >Use day as folder name</RadioButton>
+            <RadioButton GroupName="FolderName" IsChecked="{Binding AddMonthToFolderName}" IsEnabled="False">Use month-day as folder name</RadioButton>
+            <RadioButton GroupName="FolderName" IsChecked="{Binding AddYearToFolderName}" IsEnabled="True" >Use year-month-day as folder name</RadioButton>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="Test" Command="{Binding TestDaySplitCommand}" />
+                <Button Grid.Column="1" Content="Split into day folders" Command="{Binding DaySplitCommand}" />
+            </Grid>
+        </StackPanel>
+        <GridSplitter
+            Background="Transparent"
+            VerticalAlignment="Stretch"
+            HorizontalAlignment="Stretch"
+            Grid.Column="1" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
+        <ListBox Grid.Column="2" ItemsSource="{Binding Output}" photoShuffle:ListBoxBehavior.ScrollOnNewItem="true" />
+    </Grid>
+</UserControl>
