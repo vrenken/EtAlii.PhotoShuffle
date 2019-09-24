@@ -77,7 +77,7 @@ namespace EtAlii.PhotoShuffle
             {
                 var fileNameMatchFileInfo = new FileInfo(matchingFile);
                 var fileNameMatchFileSize = fileNameMatchFileInfo.Length;
-                if (fileNameMatchFileSize == sourceFileSize)
+                if (fileNameMatchFileSize == sourceFileSize && fileNameMatchFileSize != 0) // We don't want an empty file trigger the removal of a file with content.
                 {
                     matches.Add(matchingFile);
                 }

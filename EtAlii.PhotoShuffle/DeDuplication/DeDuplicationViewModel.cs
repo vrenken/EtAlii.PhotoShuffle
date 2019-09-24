@@ -18,7 +18,8 @@ namespace EtAlii.PhotoShuffle
         public bool OnlyMatchSimilarSizedFiles { get => _onlyMatchSimilarSizedFiles; set => SetProperty(ref _onlyMatchSimilarSizedFiles, value); }
         private bool _onlyMatchSimilarSizedFiles = true;
 
-        public ObservableCollection<string> Output { get; } = new ObservableCollection<string>();
+        public DispatcherObservableCollection<string> Output { get; }
+        private readonly ObservableCollection<string> _output;
         
         public AsyncCommand TestDeDuplicationCommand { get; }
         public AsyncCommand DeDuplicateCommand { get; }
@@ -35,6 +36,9 @@ namespace EtAlii.PhotoShuffle
             SelectTargetCommand = new AsyncCommand(() => Select(() => Target, value => Target = value));
 
             PropertyChanged += OnPropertyChanged;
+            
+            _output = new ObservableCollection<string>();
+            Output = new DispatcherObservableCollection<string>(_output);
         }
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -54,7 +58,7 @@ namespace EtAlii.PhotoShuffle
             var sb = new StringBuilder();
             sb.AppendLine(ex.Message);                    
             sb.AppendLine(ex.StackTrace);                    
-            Output.Add(sb.ToString());
+            _output.Add(sb.ToString());
         }
 
         private Task Select(Func<string> getter, Action<string> setter)
@@ -77,10 +81,10 @@ namespace EtAlii.PhotoShuffle
             return DeDuplicate(true);
         }
 
-        private Task DeDuplicate(bool commit)
+        private async Task DeDuplicate(bool commit)
         {
             var process = new DeDuplicationProcess();
-            return process.Execute(Source, Target, Output, OnlyMatchSimilarSizedFiles, commit);
+            await process.Execute(Source, Target, _output, OnlyMatchSimilarSizedFiles, commit);
         }
 
         private bool CanDeDuplicate()
