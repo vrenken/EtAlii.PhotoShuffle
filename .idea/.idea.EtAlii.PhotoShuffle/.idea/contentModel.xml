@@ -10,7 +10,6 @@
         <e p="AsyncCommand.cs" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="BindableBase.cs" t="Include" />
-        <e p="CreationTimeStampBuilder.cs" t="Include" />
         <e p="DaySplitting" t="Include">
           <e p="DaySplittingPanel.xaml" t="Include" />
           <e p="DaySplittingPanel.xaml.cs" t="Include" />
@@ -43,6 +42,7 @@
           </e>
         </e>
         <e p="Task.Extensions.cs" t="Include" />
+        <e p="TimeStampBuilder.cs" t="Include" />
       </e>
       <e p="EtAlii.PhotoShuffle.sln" t="IncludeFlat" />
       <e p="Global.json" t="Include" />
