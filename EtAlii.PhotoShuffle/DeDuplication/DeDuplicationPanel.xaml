@@ -6,6 +6,11 @@
         xmlns:photoShuffle="clr-namespace:EtAlii.PhotoShuffle"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=photoShuffle:DeDuplicationViewModel, IsDesignTimeCreatable=True}">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <photoShuffle:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
@@ -31,7 +36,14 @@
                 <TextBox Grid.Column="0" Text="{Binding Target, UpdateSourceTrigger=PropertyChanged}" />
                 <Button Grid.Column="1" Content="..." Command="{Binding SelectTargetCommand}"/>
             </Grid>
-            <CheckBox IsChecked="True" IsEnabled="False" >Match on file name</CheckBox>
+            
+            <TextBlock>Duplication find method</TextBlock>
+            <RadioButton 
+                GroupName="DuplicationFindMethod" 
+                IsChecked="{Binding DuplicationFindMethod, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static photoShuffle:DuplicationFindMethod.FileName}}">Filename</RadioButton>
+            <RadioButton 
+                GroupName="DuplicationFindMethod"  
+                IsChecked="{Binding DuplicationFindMethod, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static photoShuffle:DuplicationFindMethod.MetaData}}">Meta data</RadioButton>
             <CheckBox IsChecked="{Binding OnlyMatchSimilarSizedFiles}" >Match on file size</CheckBox>
             <Grid>
                 <Grid.ColumnDefinitions>

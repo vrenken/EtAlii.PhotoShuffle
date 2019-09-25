@@ -7,8 +7,10 @@ namespace EtAlii.PhotoShuffle
 
         public MainWindowViewModel()
         {
-            DeDuplication = new DeDuplicationViewModel();
-            DaySplitting = new DaySplittingViewModel();
+            var creationTimeStampFinder = new CreationTimeStampBuilder();
+            
+            DeDuplication = new DeDuplicationViewModel(creationTimeStampFinder);
+            DaySplitting = new DaySplittingViewModel(creationTimeStampFinder);
         }
     }
 }

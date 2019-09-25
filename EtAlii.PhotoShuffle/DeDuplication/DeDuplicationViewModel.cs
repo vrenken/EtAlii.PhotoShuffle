@@ -10,6 +10,7 @@ namespace EtAlii.PhotoShuffle
     
     public class DeDuplicationViewModel : BindableBase, IErrorHandler
     {
+        private readonly CreationTimeStampBuilder _creationTimeStampBuilder;
         public string Source { get => _source; set => SetProperty(ref _source, value); }
         private string _source;
         public string Target { get => _target; set => SetProperty(ref _target, value); }
@@ -18,6 +19,9 @@ namespace EtAlii.PhotoShuffle
         public bool OnlyMatchSimilarSizedFiles { get => _onlyMatchSimilarSizedFiles; set => SetProperty(ref _onlyMatchSimilarSizedFiles, value); }
         private bool _onlyMatchSimilarSizedFiles = true;
 
+        public DuplicationFindMethod DuplicationFindMethod { get => _duplicationFindMethod; set => SetProperty(ref _duplicationFindMethod, value); }
+        private DuplicationFindMethod _duplicationFindMethod = DuplicationFindMethod.FileName;
+            
         public DispatcherObservableCollection<string> Output { get; }
         private readonly ObservableCollection<string> _output;
         
@@ -27,8 +31,10 @@ namespace EtAlii.PhotoShuffle
         public IAsyncCommand SelectSourceCommand { get; }
         
         public IAsyncCommand SelectTargetCommand { get; }
-        public DeDuplicationViewModel()
+        public DeDuplicationViewModel(CreationTimeStampBuilder creationTimeStampBuilder)
         {
+            _creationTimeStampBuilder = creationTimeStampBuilder;
+            
             TestDeDuplicationCommand = new AsyncCommand(() => DeDuplicate(false), CanDeDuplicate, this);
             DeDuplicateCommand = new AsyncCommand(DeDuplicate, CanDeDuplicate, this);
             
@@ -83,8 +89,8 @@ namespace EtAlii.PhotoShuffle
 
         private async Task DeDuplicate(bool commit)
         {
-            var process = new DeDuplicationProcess();
-            await process.Execute(Source, Target, _output, OnlyMatchSimilarSizedFiles, commit);
+            var process = new DeDuplicationProcess(_creationTimeStampBuilder);
+            await process.Execute(Source, Target, _output, DuplicationFindMethod, OnlyMatchSimilarSizedFiles, commit);
         }
 
         private bool CanDeDuplicate()

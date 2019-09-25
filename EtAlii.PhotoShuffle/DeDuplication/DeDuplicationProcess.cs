@@ -10,7 +10,14 @@ namespace EtAlii.PhotoShuffle
 
     public class DeDuplicationProcess
     {
-        public Task Execute(string source, string target, ObservableCollection<string> output, bool onlyMatchSimilarSizedFiles, bool commit)
+        private CreationTimeStampBuilder _creationTimeStampBuilder;
+
+        public DeDuplicationProcess(CreationTimeStampBuilder creationTimeStampBuilder)
+        {
+            _creationTimeStampBuilder = creationTimeStampBuilder;
+        }
+
+        public Task Execute(string source, string target, ObservableCollection<string> output, DuplicationFindMethod duplicationFindMethod, bool onlyMatchSimilarSizedFiles, bool commit)
         {
             output.Clear();
 
@@ -30,11 +37,23 @@ namespace EtAlii.PhotoShuffle
             
             foreach (var sourceFile in sourceFiles)
             {
-                var matches = FindFileNameMatches(sourceFile, targetFiles);
+                var matches = duplicationFindMethod switch
+                {
+                    DuplicationFindMethod.FileName => FindFileNameMatches(sourceFile, targetFiles),
+                    DuplicationFindMethod.MetaData => FindMetaDataMatches(sourceFile, targetFiles),
+                    _ => Array.Empty<string>()
+                };
+                
                 if (onlyMatchSimilarSizedFiles)
                 {
                     matches = FindSimilarSizedMatches(sourceFile, matches);
                 }
+
+                // Let's never ever delete the original file.
+                matches = matches
+                    .Where(m => m != sourceFile)
+                    .ToArray();
+                
                 if(matches.Length > 0)
                 {
                     var sb = new StringBuilder();
@@ -64,6 +83,25 @@ namespace EtAlii.PhotoShuffle
             output.Add($"{DateTime.Now} Finished de-duplication");
 
             return Task.CompletedTask;
+        }
+
+        private string[] FindMetaDataMatches(string sourceFile, string[] targetFiles)
+        {
+            var matches = new List<string>();
+
+            var sourceDateTime = _creationTimeStampBuilder.BuildFromMetaData(sourceFile);
+            if (sourceDateTime.HasValue)
+            {
+                foreach (var targetFile in targetFiles)
+                {
+                    var targetDateTime = _creationTimeStampBuilder.BuildFromMetaData(targetFile);
+                    if (targetDateTime.HasValue && sourceDateTime == targetDateTime)
+                    {
+                        matches.Add(targetFile);
+                    }
+                }
+            }
+            return matches.ToArray();
         }
 
         private string[] FindSimilarSizedMatches(string sourceFile, string[] matchingFiles)

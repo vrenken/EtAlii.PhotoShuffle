@@ -10,6 +10,7 @@
         <e p="AsyncCommand.cs" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="BindableBase.cs" t="Include" />
+        <e p="CreationTimeStampBuilder.cs" t="Include" />
         <e p="DaySplitting" t="Include">
           <e p="DaySplittingPanel.xaml" t="Include" />
           <e p="DaySplittingPanel.xaml.cs" t="Include" />
@@ -22,6 +23,7 @@
           <e p="DeDuplicationPanel.xaml.cs" t="Include" />
           <e p="DeDuplicationProcess.cs" t="Include" />
           <e p="DeDuplicationViewModel.cs" t="Include" />
+          <e p="DuplicationFindMethod.cs" t="Include" />
         </e>
         <e p="DispatcherObservableCollection.cs" t="Include" />
         <e p="EnumToBoolean.cs" t="Include" />
