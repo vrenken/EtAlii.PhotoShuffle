@@ -10,7 +10,7 @@ namespace EtAlii.PhotoShuffle
     
     public class DeDuplicationViewModel : BindableBase, IErrorHandler
     {
-        private readonly CreationTimeStampBuilder _creationTimeStampBuilder;
+        private readonly TimeStampBuilder _timeStampBuilder;
         public string Source { get => _source; set => SetProperty(ref _source, value); }
         private string _source;
         public string Target { get => _target; set => SetProperty(ref _target, value); }
@@ -31,9 +31,9 @@ namespace EtAlii.PhotoShuffle
         public IAsyncCommand SelectSourceCommand { get; }
         
         public IAsyncCommand SelectTargetCommand { get; }
-        public DeDuplicationViewModel(CreationTimeStampBuilder creationTimeStampBuilder)
+        public DeDuplicationViewModel(TimeStampBuilder timeStampBuilder)
         {
-            _creationTimeStampBuilder = creationTimeStampBuilder;
+            _timeStampBuilder = timeStampBuilder;
             
             TestDeDuplicationCommand = new AsyncCommand(() => DeDuplicate(false), CanDeDuplicate, this);
             DeDuplicateCommand = new AsyncCommand(DeDuplicate, CanDeDuplicate, this);
@@ -89,7 +89,7 @@ namespace EtAlii.PhotoShuffle
 
         private async Task DeDuplicate(bool commit)
         {
-            var process = new DeDuplicationProcess(_creationTimeStampBuilder);
+            var process = new DeDuplicationProcess(_timeStampBuilder);
             await process.Execute(Source, Target, _output, DuplicationFindMethod, OnlyMatchSimilarSizedFiles, commit);
         }
 

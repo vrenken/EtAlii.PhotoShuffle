@@ -8,11 +8,11 @@ namespace EtAlii.PhotoShuffle
 
     public class DaySplittingProcess
     {
-        private readonly CreationTimeStampBuilder _creationTimeStampBuilder;
+        private readonly TimeStampBuilder _timeStampBuilder;
 
-        public DaySplittingProcess(CreationTimeStampBuilder creationTimeStampBuilder)
+        public DaySplittingProcess(TimeStampBuilder timeStampBuilder)
         {
-            _creationTimeStampBuilder = creationTimeStampBuilder;
+            _timeStampBuilder = timeStampBuilder;
         }
 
         public Task Execute(string source, ObservableCollection<string> output, bool addMonthToFolderName, bool addYearToFolderName, TimeStampSource timeStampSource, bool commit)
@@ -32,8 +32,8 @@ namespace EtAlii.PhotoShuffle
             {
                 var takenTime = timeStampSource switch
                 {
-                    TimeStampSource.MetaData => _creationTimeStampBuilder.BuildFromMetaData(sourceFile),
-                    TimeStampSource.FileName => _creationTimeStampBuilder.BuildFromFileName(sourceFile),
+                    TimeStampSource.MetaData => _timeStampBuilder.BuildFromMetaData(sourceFile),
+                    TimeStampSource.FileName => _timeStampBuilder.BuildFromFileName(sourceFile),
                     TimeStampSource.OperatingSystem => null,
                     _ => null
                 };

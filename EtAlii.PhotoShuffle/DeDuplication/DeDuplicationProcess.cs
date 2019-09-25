@@ -10,11 +10,11 @@ namespace EtAlii.PhotoShuffle
 
     public class DeDuplicationProcess
     {
-        private CreationTimeStampBuilder _creationTimeStampBuilder;
+        private TimeStampBuilder _timeStampBuilder;
 
-        public DeDuplicationProcess(CreationTimeStampBuilder creationTimeStampBuilder)
+        public DeDuplicationProcess(TimeStampBuilder timeStampBuilder)
         {
-            _creationTimeStampBuilder = creationTimeStampBuilder;
+            _timeStampBuilder = timeStampBuilder;
         }
 
         public Task Execute(string source, string target, ObservableCollection<string> output, DuplicationFindMethod duplicationFindMethod, bool onlyMatchSimilarSizedFiles, bool commit)
@@ -89,12 +89,12 @@ namespace EtAlii.PhotoShuffle
         {
             var matches = new List<string>();
 
-            var sourceDateTime = _creationTimeStampBuilder.BuildFromMetaData(sourceFile);
+            var sourceDateTime = _timeStampBuilder.BuildFromMetaData(sourceFile);
             if (sourceDateTime.HasValue)
             {
                 foreach (var targetFile in targetFiles)
                 {
-                    var targetDateTime = _creationTimeStampBuilder.BuildFromMetaData(targetFile);
+                    var targetDateTime = _timeStampBuilder.BuildFromMetaData(targetFile);
                     if (targetDateTime.HasValue && sourceDateTime == targetDateTime)
                     {
                         matches.Add(targetFile);

@@ -10,7 +10,7 @@ namespace EtAlii.PhotoShuffle
     
     public class DaySplittingViewModel : BindableBase, IErrorHandler
     {
-        private readonly CreationTimeStampBuilder _creationTimeStampBuilder;
+        private readonly TimeStampBuilder _timeStampBuilder;
         public string Source { get => _source; set => SetProperty(ref _source, value); }
         private string _source;
 
@@ -30,9 +30,9 @@ namespace EtAlii.PhotoShuffle
         public AsyncCommand DaySplitCommand { get; }
         public IAsyncCommand SelectSourceCommand { get; }
 
-        public DaySplittingViewModel(CreationTimeStampBuilder creationTimeStampBuilder)
+        public DaySplittingViewModel(TimeStampBuilder timeStampBuilder)
         {
-            _creationTimeStampBuilder = creationTimeStampBuilder;
+            _timeStampBuilder = timeStampBuilder;
             
             TestDaySplitCommand = new AsyncCommand(() => DaySplit(false), CanDaySplit, this);
             DaySplitCommand = new AsyncCommand(DaySplit, CanDaySplit, this);
@@ -88,7 +88,7 @@ namespace EtAlii.PhotoShuffle
         {
 //            return Task.Run(() =>
 //            {
-                var process = new DaySplittingProcess(_creationTimeStampBuilder);
+                var process = new DaySplittingProcess(_timeStampBuilder);
                 await process.Execute(Source, _output, AddMonthToFolderName, AddYearToFolderName, TimeStampSource, commit);
 //            });
         }
