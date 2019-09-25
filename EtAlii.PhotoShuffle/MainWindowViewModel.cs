@@ -4,6 +4,8 @@ namespace EtAlii.PhotoShuffle
     {
         public DeDuplicationViewModel DeDuplication { get; }
         public DaySplittingViewModel DaySplitting { get; }
+        public MoveWithPreviewViewModel MoveWithPreview { get; }
+        public FlattenViewModel Flatten { get; }
 
         public MainWindowViewModel()
         {
@@ -11,6 +13,8 @@ namespace EtAlii.PhotoShuffle
             
             DeDuplication = new DeDuplicationViewModel(creationTimeStampFinder);
             DaySplitting = new DaySplittingViewModel(creationTimeStampFinder);
+            MoveWithPreview = new MoveWithPreviewViewModel(creationTimeStampFinder);
+            Flatten = new FlattenViewModel(creationTimeStampFinder);
         }
     }
 }

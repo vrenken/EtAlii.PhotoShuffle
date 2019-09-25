@@ -28,12 +28,24 @@
         <e p="EnumToBoolean.cs" t="Include" />
         <e p="EtAlii.PhotoShuffle.csproj" t="IncludeRecursive" />
         <e p="EtAlii.PhotoShuffle.csproj.DotSettings" t="Include" />
+        <e p="Flatten" t="Include">
+          <e p="FlattenPanel.xaml" t="Include" />
+          <e p="FlattenPanel.xaml.cs" t="Include" />
+          <e p="FlattenProcess.cs" t="Include" />
+          <e p="FlattenViewModel.cs" t="Include" />
+        </e>
         <e p="IAsyncCommand.cs" t="Include" />
         <e p="IErrorHandler.cs" t="Include" />
         <e p="ListBoxBehavior.cs" t="Include" />
         <e p="MainWindow.xaml" t="Include" />
         <e p="MainWindow.xaml.cs" t="Include" />
         <e p="MainWindowViewModel.cs" t="Include" />
+        <e p="MoveWithPreview" t="Include">
+          <e p="MoveProcess.cs" t="Include" />
+          <e p="MoveWithPreviewPanel.xaml" t="Include" />
+          <e p="MoveWithPreviewPanel.xaml.cs" t="Include" />
+          <e p="MoveWithPreviewViewModel.cs" t="Include" />
+        </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp3.0" t="Include">
