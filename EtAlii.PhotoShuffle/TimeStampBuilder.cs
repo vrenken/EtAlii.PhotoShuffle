@@ -11,7 +11,7 @@ namespace EtAlii.PhotoShuffle
     using MetadataExtractor.Formats.QuickTime;
     using Directory = MetadataExtractor.Directory;
 
-    public class CreationTimeStampBuilder
+    public class TimeStampBuilder
     {
 
         public DateTime? BuildFromFileName(string sourceFile)
