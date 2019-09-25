@@ -19,6 +19,9 @@ namespace EtAlii.PhotoShuffle
         public bool OnlyMatchSimilarSizedFiles { get => _onlyMatchSimilarSizedFiles; set => SetProperty(ref _onlyMatchSimilarSizedFiles, value); }
         private bool _onlyMatchSimilarSizedFiles = true;
 
+        public bool RemoveSmallerSourceFiles { get => _removeSmallerSourceFiles; set => SetProperty(ref _removeSmallerSourceFiles, value); }
+        private bool _removeSmallerSourceFiles;
+
         public DuplicationFindMethod DuplicationFindMethod { get => _duplicationFindMethod; set => SetProperty(ref _duplicationFindMethod, value); }
         private DuplicationFindMethod _duplicationFindMethod = DuplicationFindMethod.FileName;
             
@@ -90,7 +93,7 @@ namespace EtAlii.PhotoShuffle
         private async Task DeDuplicate(bool commit)
         {
             var process = new DeDuplicationProcess(_timeStampBuilder);
-            await process.Execute(Source, Target, _output, DuplicationFindMethod, OnlyMatchSimilarSizedFiles, commit);
+            await process.Execute(Source, Target, _output, DuplicationFindMethod, OnlyMatchSimilarSizedFiles, RemoveSmallerSourceFiles, commit);
         }
 
         private bool CanDeDuplicate()

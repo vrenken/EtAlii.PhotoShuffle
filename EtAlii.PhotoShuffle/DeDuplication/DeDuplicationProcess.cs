@@ -17,7 +17,7 @@ namespace EtAlii.PhotoShuffle
             _timeStampBuilder = timeStampBuilder;
         }
 
-        public Task Execute(string source, string target, ObservableCollection<string> output, DuplicationFindMethod duplicationFindMethod, bool onlyMatchSimilarSizedFiles, bool commit)
+        public Task Execute(string source, string target, ObservableCollection<string> output, DuplicationFindMethod duplicationFindMethod, bool onlyMatchSimilarSizedFiles, bool removeSmallerSourceFiles, bool commit)
         {
             output.Clear();
 
@@ -43,7 +43,11 @@ namespace EtAlii.PhotoShuffle
                     DuplicationFindMethod.MetaData => FindMetaDataMatches(sourceFile, targetFiles),
                     _ => Array.Empty<string>()
                 };
-                
+
+                if (removeSmallerSourceFiles)
+                {
+                    matches = FindBiggerSizedMatches(sourceFile, matches);
+                }
                 if (onlyMatchSimilarSizedFiles)
                 {
                     matches = FindSimilarSizedMatches(sourceFile, matches);
@@ -56,12 +60,23 @@ namespace EtAlii.PhotoShuffle
                 
                 if(matches.Length > 0)
                 {
+                    var sourceLength = new FileInfo(sourceFile).Length;
                     var sb = new StringBuilder();
                     sb.AppendLine($"{DateTime.Now} Found match:");
-                    sb.AppendLine($"Source: {sourceFile} ({new FileInfo(sourceFile).Length})");
+                    sb.AppendLine($"Source: {sourceFile} ({sourceLength} Bytes)");
                     foreach (var match in matches)
                     {
-                        sb.AppendLine($"Match: {match} ({new FileInfo(match).Length})");
+                        var matchLength = new FileInfo(match).Length;
+                        var sizeMessage = "SAME SIZE";
+                        if (matchLength > sourceLength)
+                        {
+                            sizeMessage = "BIGGER";
+                        }
+                        else if (matchLength < sourceLength)
+                        {
+                            sizeMessage = "SMALLER";
+                        }
+                        sb.AppendLine($"Match: {match} ({matchLength} Bytes ={sizeMessage})");
                     }
                     output.Add(sb.ToString());
                     
@@ -101,6 +116,26 @@ namespace EtAlii.PhotoShuffle
                     }
                 }
             }
+            return matches.ToArray();
+        }
+
+        private string[] FindBiggerSizedMatches(string sourceFile, string[] matchingFiles)
+        {
+            var matches = new List<string>();
+            
+            var sourceFileInfo = new FileInfo(sourceFile);
+            var sourceFileSize = sourceFileInfo.Length;
+
+            foreach (var matchingFile in matchingFiles)
+            {
+                var fileNameMatchFileInfo = new FileInfo(matchingFile);
+                var fileNameMatchFileSize = fileNameMatchFileInfo.Length;
+                if (fileNameMatchFileSize > sourceFileSize && fileNameMatchFileSize != 0) // We don't want an empty file trigger the removal of a file with content.
+                {
+                    matches.Add(matchingFile);
+                }
+            }
+
             return matches.ToArray();
         }
 
