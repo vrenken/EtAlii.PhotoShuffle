@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:photoShuffle="clr-namespace:EtAlii.PhotoShuffle"
         mc:Ignorable="d"
-        Title="Photo Shuffle - Advanced photo management" Height="450" Width="800">
+        Title="Photo Shuffle - Advanced photo management" Height="500" Width="800">
     <Grid>
 <TabControl>
     <TabItem Header="De-duplicator">
