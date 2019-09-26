@@ -4,5 +4,6 @@ namespace EtAlii.PhotoShuffle
     {
         FileName,
         MetaData,
+        Features
     }
 }

@@ -44,6 +44,10 @@
             <RadioButton 
                 GroupName="DuplicationFindMethod"  
                 IsChecked="{Binding DuplicationFindMethod, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static photoShuffle:DuplicationFindMethod.MetaData}}">Meta data</RadioButton>
+            <RadioButton 
+                GroupName="DuplicationFindMethod"  
+                IsChecked="{Binding DuplicationFindMethod, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static photoShuffle:DuplicationFindMethod.Features}}">Features</RadioButton>
+
             <CheckBox IsChecked="{Binding OnlyMatchSimilarSizedFiles}" >Match on file size</CheckBox>
             <CheckBox IsChecked="{Binding RemoveSmallerSourceFiles}" >Remove smaller source files</CheckBox>
             <Grid>
