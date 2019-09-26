@@ -7,6 +7,7 @@ namespace EtAlii.PhotoShuffle
         public MoveWithPreviewViewModel MoveWithPreview { get; }
         public FlattenViewModel Flatten { get; }
 
+        public NonMediaCleanupViewModel NonMediaCleanup { get; }
         public MainWindowViewModel()
         {
             var creationTimeStampFinder = new TimeStampBuilder();
@@ -15,6 +16,8 @@ namespace EtAlii.PhotoShuffle
             DaySplitting = new DaySplittingViewModel(creationTimeStampFinder);
             MoveWithPreview = new MoveWithPreviewViewModel(creationTimeStampFinder);
             Flatten = new FlattenViewModel(creationTimeStampFinder);
+            
+            NonMediaCleanup = new NonMediaCleanupViewModel(creationTimeStampFinder);
         }
     }
 }

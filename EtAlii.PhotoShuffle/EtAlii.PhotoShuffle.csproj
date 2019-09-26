@@ -8,8 +8,18 @@
 
   <ItemGroup>
     <PackageReference Include="MetadataExtractor" Version="2.1.0" />
-    <PackageReference Include="Microsoft.WindowsAPICodePack-Core" Version="1.1.0.2" />
-    <PackageReference Include="Microsoft.WindowsAPICodePack-Shell" Version="1.1.0" />
+    <PackageReference Include="Microsoft.WindowsAPICodePack-Core" Version="1.1.0.2">
+      <NoWarn>NU1701</NoWarn>
+    </PackageReference>
+    <PackageReference Include="Microsoft.WindowsAPICodePack-Shell" Version="1.1.0">
+      <NoWarn>NU1701</NoWarn>
+    </PackageReference>
+    <PackageReference Include="OpenCvSharp4.Windows" Version="4.1.0.20190416">
+      <NoWarn>NU1701</NoWarn>
+    </PackageReference>
+    <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.1.0.20190416">
+      <NoWarn>NU1701</NoWarn>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

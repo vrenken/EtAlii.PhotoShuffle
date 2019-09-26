@@ -20,6 +20,9 @@
     <TabItem Header="Flatten">
         <photoShuffle:FlattenPanel DataContext="{Binding Flatten}"/>
     </TabItem>
+    <TabItem Header="Non-media cleanup">
+        <photoShuffle:NonMediaCleanupPanel DataContext="{Binding NonMediaCleanup}"/>
+    </TabItem>
 </TabControl>
     </Grid>
 </Window>  
