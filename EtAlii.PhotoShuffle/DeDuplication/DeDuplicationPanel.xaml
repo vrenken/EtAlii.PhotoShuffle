@@ -55,8 +55,8 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Content="Test" Command="{Binding TestDeDuplicationCommand}" />
-                <Button Grid.Column="1" Content="Remove from source" Command="{Binding DeDuplicateCommand}" />
+                <Button Grid.Column="0" Content="Test" Command="{Binding TestCommand}" />
+                <Button Grid.Column="1" Content="Remove from source" Command="{Binding ExecuteCommand}" />
             </Grid>
         </StackPanel>
         <GridSplitter

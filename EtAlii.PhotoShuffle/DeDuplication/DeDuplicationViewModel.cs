@@ -28,8 +28,8 @@ namespace EtAlii.PhotoShuffle
         public DispatcherObservableCollection<string> Output { get; }
         private readonly ObservableCollection<string> _output;
         
-        public AsyncCommand TestDeDuplicationCommand { get; }
-        public AsyncCommand DeDuplicateCommand { get; }
+        public AsyncCommand TestCommand { get; }
+        public AsyncCommand ExecuteCommand { get; }
 
         public IAsyncCommand SelectSourceCommand { get; }
         
@@ -38,8 +38,8 @@ namespace EtAlii.PhotoShuffle
         {
             _timeStampBuilder = timeStampBuilder;
             
-            TestDeDuplicationCommand = new AsyncCommand(() => DeDuplicate(false), CanDeDuplicate, this);
-            DeDuplicateCommand = new AsyncCommand(DeDuplicate, CanDeDuplicate, this);
+            TestCommand = new AsyncCommand(() => Execute(false), CanExecute, this);
+            ExecuteCommand = new AsyncCommand(Execute, CanExecute, this);
             
             SelectSourceCommand = new AsyncCommand(() => Select(() => Source, value => Source = value));
             SelectTargetCommand = new AsyncCommand(() => Select(() => Target, value => Target = value));
@@ -56,8 +56,8 @@ namespace EtAlii.PhotoShuffle
             {
                 case nameof(Source):
                 case nameof(Target):
-                    DeDuplicateCommand.RaiseCanExecuteChanged();
-                    TestDeDuplicationCommand.RaiseCanExecuteChanged();
+                    ExecuteCommand.RaiseCanExecuteChanged();
+                    TestCommand.RaiseCanExecuteChanged();
                     break;
             }
         }
@@ -85,18 +85,20 @@ namespace EtAlii.PhotoShuffle
             return Task.CompletedTask;
         }
         
-        private Task DeDuplicate()
+        private Task Execute()
         {
-            return DeDuplicate(true);
+            return Execute(true);
         }
 
-        private async Task DeDuplicate(bool commit)
+        private Task Execute(bool commit)
         {
-            var process = new DeDuplicationProcess(_timeStampBuilder);
-            await process.Execute(Source, Target, _output, DuplicationFindMethod, OnlyMatchSimilarSizedFiles, RemoveSmallerSourceFiles, commit);
+            return Task.Run(async () =>
+            {
+                var process = new DeDuplicationProcess(_timeStampBuilder);
+                await process.Execute(Source, Target, _output, DuplicationFindMethod, OnlyMatchSimilarSizedFiles, RemoveSmallerSourceFiles, commit);
+            });
         }
-
-        private bool CanDeDuplicate()
+        private bool CanExecute()
         {
             var prerequisitesMet = 
                 ! string.IsNullOrWhiteSpace(Source) &
