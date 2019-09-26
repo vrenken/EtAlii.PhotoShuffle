@@ -9,6 +9,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <photoShuffle:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+            <photoShuffle:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -17,7 +18,7 @@
             <ColumnDefinition Width="11" />
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0" Orientation="Vertical">
+        <StackPanel Grid.Column="0" Orientation="Vertical" IsEnabled="{Binding IsProcessing, Converter={StaticResource InverseBooleanConverter}}">
             <TextBlock Text="Source" />
             <Grid>
                 <Grid.ColumnDefinitions>

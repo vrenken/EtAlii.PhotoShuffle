@@ -1,14 +1,11 @@
 namespace EtAlii.PhotoShuffle
 {
-    using System;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.IO;
-    using System.Text;
     using System.Threading.Tasks;
-    using Microsoft.WindowsAPICodePack.Dialogs;
-    
-    public class DeDuplicationViewModel : BindableBase, IErrorHandler
+
+    public class DeDuplicationViewModel : ProcessViewModelBase
     {
         private readonly TimeStampBuilder _timeStampBuilder;
         public string Source { get => _source; set => SetProperty(ref _source, value); }
@@ -24,13 +21,7 @@ namespace EtAlii.PhotoShuffle
 
         public DuplicationFindMethod DuplicationFindMethod { get => _duplicationFindMethod; set => SetProperty(ref _duplicationFindMethod, value); }
         private DuplicationFindMethod _duplicationFindMethod = DuplicationFindMethod.FileName;
-            
-        public DispatcherObservableCollection<string> Output { get; }
-        private readonly ObservableCollection<string> _output;
-        
-        public AsyncCommand TestCommand { get; }
-        public AsyncCommand ExecuteCommand { get; }
-
+         
         public IAsyncCommand SelectSourceCommand { get; }
         
         public IAsyncCommand SelectTargetCommand { get; }
@@ -38,16 +29,12 @@ namespace EtAlii.PhotoShuffle
         {
             _timeStampBuilder = timeStampBuilder;
             
-            TestCommand = new AsyncCommand(() => Execute(false), CanExecute, this);
-            ExecuteCommand = new AsyncCommand(Execute, CanExecute, this);
-            
-            SelectSourceCommand = new AsyncCommand(() => Select(() => Source, value => Source = value));
-            SelectTargetCommand = new AsyncCommand(() => Select(() => Target, value => Target = value));
+            SelectSourceCommand = new AsyncCommand(() => SelectFolder(() => Source, value => Source = value));
+            SelectTargetCommand = new AsyncCommand(() => SelectFolder(() => Target, value => Target = value));
 
+            Source = @"C:\Users\vrenk\OneDrive\Afbeeldingen\2002\_Unsorted";
+            Target = @"C:\Users\vrenk\OneDrive\Afbeeldingen\2002\_Unsorted\";
             PropertyChanged += OnPropertyChanged;
-            
-            _output = new ObservableCollection<string>();
-            Output = new DispatcherObservableCollection<string>(_output);
         }
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -62,43 +49,12 @@ namespace EtAlii.PhotoShuffle
             }
         }
 
-        public void HandleError(Exception ex)
+        protected override Task ExecuteAsync(bool commit, ObservableCollection<string> output)
         {
-            var sb = new StringBuilder();
-            sb.AppendLine(ex.Message);                    
-            sb.AppendLine(ex.StackTrace);                    
-            _output.Add(sb.ToString());
+            var process = new DeDuplicationProcess(_timeStampBuilder);
+            return process.Execute(Source, Target, output, DuplicationFindMethod, OnlyMatchSimilarSizedFiles, RemoveSmallerSourceFiles, commit);
         }
-
-        private Task Select(Func<string> getter, Action<string> setter)
-        {
-            using var dialog = new CommonOpenFileDialog
-            {
-                InitialDirectory = getter(), 
-                IsFolderPicker = true
-            };
-
-            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
-            {
-                setter(dialog.FileName);
-            }
-            return Task.CompletedTask;
-        }
-        
-        private Task Execute()
-        {
-            return Execute(true);
-        }
-
-        private Task Execute(bool commit)
-        {
-            return Task.Run(async () =>
-            {
-                var process = new DeDuplicationProcess(_timeStampBuilder);
-                await process.Execute(Source, Target, _output, DuplicationFindMethod, OnlyMatchSimilarSizedFiles, RemoveSmallerSourceFiles, commit);
-            });
-        }
-        private bool CanExecute()
+        protected override bool CanExecute()
         {
             var prerequisitesMet = 
                 ! string.IsNullOrWhiteSpace(Source) &

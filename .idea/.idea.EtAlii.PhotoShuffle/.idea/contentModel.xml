@@ -21,6 +21,7 @@
           <e p="DeDuplicationPanel.xaml" t="Include" />
           <e p="DeDuplicationPanel.xaml.cs" t="Include" />
           <e p="DeDuplicationProcess.cs" t="Include" />
+          <e p="DeDuplicationProcess.Features.cs" t="Include" />
           <e p="DeDuplicationViewModel.cs" t="Include" />
           <e p="DuplicationFindMethod.cs" t="Include" />
         </e>
@@ -40,6 +41,7 @@
         </e>
         <e p="IAsyncCommand.cs" t="Include" />
         <e p="IErrorHandler.cs" t="Include" />
+        <e p="InverseBooleanConverter.cs" t="Include" />
         <e p="ListBoxBehavior.cs" t="Include" />
         <e p="MainWindow.xaml" t="Include" />
         <e p="MainWindow.xaml.cs" t="Include" />
@@ -63,6 +65,7 @@
             </e>
           </e>
         </e>
+        <e p="ProcessViewModelBase.cs" t="Include" />
         <e p="Task.Extensions.cs" t="Include" />
         <e p="TimeStampBuilder.cs" t="Include" />
       </e>

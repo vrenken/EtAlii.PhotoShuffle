@@ -6,13 +6,18 @@
         xmlns:photoShuffle="clr-namespace:EtAlii.PhotoShuffle"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=photoShuffle:NonMediaCleanupViewModel, IsDesignTimeCreatable=True}">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <photoShuffle:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="11" />
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0" Orientation="Vertical">
+        <StackPanel Grid.Column="0" Orientation="Vertical" IsEnabled="{Binding IsProcessing, Converter={StaticResource InverseBooleanConverter}}">
             <TextBlock Text="Source" />
             <Grid>
                 <Grid.ColumnDefinitions>
