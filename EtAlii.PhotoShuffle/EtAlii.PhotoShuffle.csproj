@@ -2,11 +2,28 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>net48</TargetFramework>
     <UseWPF>true</UseWPF>
+    <Configurations>Debug;Release</Configurations>
+    <Platforms>AnyCPU;x64</Platforms>
+    <LangVersion>preview</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="EMGU.CV-CUDA" Version="4.1.1.3506">
+      <NoWarn>NU1701</NoWarn>
+    </PackageReference>
+    <PackageReference Include="ZedGraph" Version="5.1.7">
+      <NoWarn>NU1701</NoWarn>
+    </PackageReference>
     <PackageReference Include="MetadataExtractor" Version="2.1.0" />
     <PackageReference Include="Microsoft.WindowsAPICodePack-Core" Version="1.1.0.2">
       <NoWarn>NU1701</NoWarn>
@@ -14,12 +31,7 @@
     <PackageReference Include="Microsoft.WindowsAPICodePack-Shell" Version="1.1.0">
       <NoWarn>NU1701</NoWarn>
     </PackageReference>
-    <PackageReference Include="OpenCvSharp4.Windows" Version="4.1.0.20190416">
-      <NoWarn>NU1701</NoWarn>
-    </PackageReference>
-    <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.1.0.20190416">
-      <NoWarn>NU1701</NoWarn>
-    </PackageReference>
+
   </ItemGroup>
 
 </Project>

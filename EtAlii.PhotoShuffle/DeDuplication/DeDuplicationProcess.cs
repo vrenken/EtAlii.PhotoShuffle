@@ -7,17 +7,10 @@ namespace EtAlii.PhotoShuffle
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-    using OpenCvSharp;
-    using OpenCvSharp.Flann;
 
     public partial class DeDuplicationProcess
     {
         private readonly TimeStampBuilder _timeStampBuilder;
-
-        public DeDuplicationProcess(TimeStampBuilder timeStampBuilder)
-        {
-            _timeStampBuilder = timeStampBuilder;
-        }
 
         public Task Execute(string source, string target, ObservableCollection<string> output, DuplicationFindMethod duplicationFindMethod, bool onlyMatchSimilarSizedFiles, bool removeSmallerSourceFiles, bool commit)
         {
@@ -36,12 +29,6 @@ namespace EtAlii.PhotoShuffle
             output.Add($"{DateTime.Now} Matching files");
 
             var duplicatesToRemove = new List<string>();
-            
-            var detector = OpenCvSharp.XFeatures2D.SIFT.Create();
-            var indexParameters = new IndexParams();
-            indexParameters.SetAlgorithm(0);
-            indexParameters.SetInt("trees", 5);
-            var matcher = new FlannBasedMatcher(indexParameters);
 
             foreach (var sourceFile in sourceFiles)
             {
@@ -49,7 +36,7 @@ namespace EtAlii.PhotoShuffle
                 {
                     DuplicationFindMethod.FileName => FindFileNameMatches(sourceFile, targetFiles),
                     DuplicationFindMethod.MetaData => FindMetaDataMatches(sourceFile, targetFiles),
-                    DuplicationFindMethod.Features => FindFeatureMatches(sourceFile, targetFiles, output, detector, matcher),
+                    DuplicationFindMethod.Features => FindFeatureMatches(sourceFile, targetFiles, output),
                     _ => Array.Empty<string>()
                 };
 

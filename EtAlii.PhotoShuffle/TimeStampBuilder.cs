@@ -17,7 +17,7 @@ namespace EtAlii.PhotoShuffle
         public DateTime? BuildFromFileName(string sourceFile)
         {
             var fileName = Path.GetFileNameWithoutExtension(sourceFile).ToLower();
-            var parts = fileName.Replace("_", "-").Split("-");
+            var parts = fileName.Replace("_", "-").Split('-');
             var part = parts
                 .Where(p => p.Length == 8)
                 .SingleOrDefault(p => p.StartsWith("20") || p.StartsWith("19"));

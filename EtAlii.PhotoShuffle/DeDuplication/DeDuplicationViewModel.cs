@@ -31,9 +31,6 @@ namespace EtAlii.PhotoShuffle
             
             SelectSourceCommand = new AsyncCommand(() => SelectFolder(() => Source, value => Source = value));
             SelectTargetCommand = new AsyncCommand(() => SelectFolder(() => Target, value => Target = value));
-
-            Source = @"C:\Users\vrenk\OneDrive\Afbeeldingen\2002\_Unsorted";
-            Target = @"C:\Users\vrenk\OneDrive\Afbeeldingen\2002\_Unsorted\";
             PropertyChanged += OnPropertyChanged;
         }
 

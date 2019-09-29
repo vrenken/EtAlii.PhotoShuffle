@@ -26,10 +26,6 @@
           <e p="DuplicationFindMethod.cs" t="Include" />
         </e>
         <e p="DispatcherObservableCollection.cs" t="Include" />
-        <e p="dll" t="Include">
-          <e p="x64" t="Include" />
-          <e p="x86" t="Include" />
-        </e>
         <e p="EnumToBoolean.cs" t="Include" />
         <e p="EtAlii.PhotoShuffle.csproj" t="IncludeRecursive" />
         <e p="EtAlii.PhotoShuffle.csproj.DotSettings" t="Include" />
@@ -59,24 +55,106 @@
           <e p="NonMediaCleanupViewModel.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
-          <e p="Debug" t="Include">
-            <e p="netcoreapp3.0" t="Include">
-              <e p="EtAlii.PhotoShuffle.AssemblyInfo.cs" t="Include" />
+          <e p="x64" t="Include">
+            <e p="Debug" t="Include">
+              <e p="net48" t="Include">
+                <e p="EtAlii.PhotoShuffle.AssemblyInfo.cs" t="Include" />
+              </e>
             </e>
           </e>
         </e>
         <e p="ProcessViewModelBase.cs" t="Include" />
         <e p="Task.Extensions.cs" t="Include" />
         <e p="TimeStampBuilder.cs" t="Include" />
+        <e p="x64" t="Include" />
       </e>
       <e p="EtAlii.PhotoShuffle.sln" t="IncludeFlat" />
       <e p="Global.json" t="Include" />
       <e p="packages" t="ExcludeRecursive" />
     </e>
-    <e p="C:\Users\vrenk\.nuget\packages\opencvsharp4.runtime.win\4.1.0.20190416\runtimes\win-x64\native\opencv_ffmpeg410_64.dll" t="Include" />
-    <e p="C:\Users\vrenk\.nuget\packages\opencvsharp4.runtime.win\4.1.0.20190416\runtimes\win-x64\native\OpenCvSharpExtern.dll" t="Include" />
-    <e p="C:\Users\vrenk\.nuget\packages\opencvsharp4.runtime.win\4.1.0.20190416\runtimes\win-x86\native\opencv_ffmpeg410.dll" t="Include" />
-    <e p="C:\Users\vrenk\.nuget\packages\opencvsharp4.runtime.win\4.1.0.20190416\runtimes\win-x86\native\OpenCvSharpExtern.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\concrt140.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\cvextern.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\freetype.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\harfbuzz.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\msvcp140.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_aruco411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_bgsegm411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_bioinspired411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_calib3d411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_ccalib411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_core411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_cudaarithm411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_cudabgsegm411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_cudacodec411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_cudafeatures2d411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_cudafilters411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_cudaimgproc411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_cudalegacy411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_cudaobjdetect411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_cudaoptflow411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_cudastereo411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_cudawarping411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_cudev411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_datasets411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_dnn411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_dnn_objdetect411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_dpm411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_face411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_features2d411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_flann411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_freetype411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_fuzzy411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_gapi411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_hfs411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_highgui411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_img_hash411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_imgcodecs411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_imgproc411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_line_descriptor411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_ml411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_objdetect411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_optflow411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_phase_unwrapping411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_photo411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_plot411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_quality411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_rgbd411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_saliency411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_shape411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_stereo411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_stitching411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_structured_light411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_superres411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_surface_matching411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_text411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_tracking411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_video411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_videoio411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_videoio_ffmpeg411_64.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_videostab411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_viz411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_xfeatures2d411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_ximgproc411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_xobjdetect411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\opencv_xphoto411.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv-cuda\4.1.1.3506\build\x64\vcruntime140.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv.cudnn\7.5.1\build\x64\cudnn64_7.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv.cufft\10.1.243\build\x64\cufft64_10.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv.native\10.1.243\build\x64\cublas64_10.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv.native\10.1.243\build\x64\cublasLt64_10.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv.native\10.1.243\build\x64\cudart64_101.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv.native\10.1.243\build\x64\nppc64_10.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv.native\10.1.243\build\x64\nppial64_10.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv.native\10.1.243\build\x64\nppicc64_10.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv.native\10.1.243\build\x64\nppicom64_10.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv.native\10.1.243\build\x64\nppidei64_10.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv.native\10.1.243\build\x64\nppif64_10.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv.native\10.1.243\build\x64\nppig64_10.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv.native\10.1.243\build\x64\nppim64_10.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv.native\10.1.243\build\x64\nppist64_10.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv.native\10.1.243\build\x64\nppisu64_10.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv.native\10.1.243\build\x64\nppitc64_10.dll" t="Include" />
+    <e p="C:\Users\vrenk\.nuget\packages\emgu.cv.native\10.1.243\build\x64\npps64_10.dll" t="Include" />
     <e p="C:\Users\vrenk\.Rider2019.2\config\extensions" t="IncludeRecursive" />
     <e p="C:\Users\vrenk\.Rider2019.2\system\extResources" t="IncludeRecursive" />
     <e p="C:\Users\vrenk\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_EtAlii.PhotoShuffle.-1462971593.00" t="ExcludeRecursive" />
