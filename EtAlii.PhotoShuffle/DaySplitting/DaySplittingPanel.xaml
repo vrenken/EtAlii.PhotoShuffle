@@ -47,8 +47,8 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Content="Test" Command="{Binding TestDaySplitCommand}" />
-                <Button Grid.Column="1" Content="Split into day folders" Command="{Binding DaySplitCommand}" />
+                <Button Grid.Column="0" Content="Test" Command="{Binding TestCommand}" />
+                <Button Grid.Column="1" Content="Split into day folders" Command="{Binding ExecuteCommand}" />
             </Grid>
         </StackPanel>
         <GridSplitter
