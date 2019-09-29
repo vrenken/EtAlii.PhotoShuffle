@@ -8,18 +8,43 @@ namespace EtAlii.PhotoShuffle
     using System.Text;
     using System.Threading.Tasks;
     using System.Windows;
-    using OpenCvSharp;
-    using OpenCvSharp.XFeatures2D;
-    using Size = OpenCvSharp.Size;
+    using Emgu.CV;
+    using Emgu.CV.Cuda;
+    using Emgu.CV.CvEnum;
+    using Emgu.CV.Features2D;
+    using Emgu.CV.Structure;
+    using Emgu.CV.Util;
 
     public partial class DeDuplicationProcess
     {
+        //private readonly CudaBFMatcher _matcher;
+        //private readonly Feature2D _detector;
         private const float MatchDistance = 0.6f;
         private const int KnnMatchValue = 2;
         private const float MinimumMatchQuality = 0.5f;
         
-        private string[] FindFeatureMatches(string sourceFile, string[] targetFiles, ObservableCollection<string> output, SIFT detector, FlannBasedMatcher matcher)
+        public DeDuplicationProcess(TimeStampBuilder timeStampBuilder)
         {
+            _timeStampBuilder = timeStampBuilder;
+            
+            //_detector = new Emgu.CV.XFeatures2D.DAISY();
+            //_detector = new CudaFastFeatureDetector();
+            //_detector = new CudaORBDetector();
+            //var indexParameters = new KdTreeIndexParams(5);
+            //var searchParams = new SearchParams();
+            //var matcher = new FlannBasedMatcher(indexParameters, searchParams);
+
+//            var detector = OpenCvSharp.XFeatures2D.SIFT.Create();
+//            var indexParameters = new IndexParams();
+//            indexParameters.SetAlgorithm(0);
+//            indexParameters.SetInt("trees", 5);
+//            var matcher = new FlannBasedMatcher(indexParameters);
+
+        }
+
+        private string[] FindFeatureMatches(string sourceFile, string[] targetFiles, ObservableCollection<string> output)
+        {
+            //Emgu.CV.CvInvoke
             // Currently we are only interested in jpg files. 
             targetFiles = targetFiles
                 .Where(targetFile =>
@@ -31,82 +56,100 @@ namespace EtAlii.PhotoShuffle
             
             var matchingFiles = new List<string>();
             
-            var sourceImage = Cv2.ImRead(sourceFile);
-            var sourceDescriptors = new Mat();
+            using var sourceImage = CvInvoke.Imread(sourceFile, ImreadModes.Grayscale);
+            using var sourceMat = new GpuMat();
+
+            //CudaInvoke.CvtColor(sourceImage, sourceMat, ColorConversion.Bgr2Bgra);
+
+            sourceMat.Upload(sourceImage);
+            using var sourceDescriptors = new GpuMat();
+
+            using var detector = new CudaORBDetector();
+            var sourceKeyPoints = detector.Detect(sourceMat, null);
+            detector.Compute(sourceMat, new VectorOfKeyPoint(sourceKeyPoints), sourceDescriptors);
+            //detector.DetectAndCompute(sourceImage, null, sourceKeyPoints, sourceDescriptors, false);
+
             
-            detector.DetectAndCompute(sourceImage, null, out var sourceKeyPoints, sourceDescriptors);
-
-            Parallel.ForEach(targetFiles, targetFile =>
+            Parallel.ForEach(targetFiles, new ParallelOptions { MaxDegreeOfParallelism = 40 },targetFile =>
             {
-                if (new FileInfo(targetFile).Length == 0) // We cannot compare empty images.
+                try
                 {
-                    return;
-                }
-                
-                var targetImage = Cv2.ImRead(targetFile);
+                    if (targetFile == sourceFile)
+                    {
+                        return; // No need to match the original file.
+                    }
+                    if (new FileInfo(targetFile).Length == 0) // We cannot compare empty images.
+                    {
+                        return;
+                    }
 
-//                using var difference = new Mat();
-//                Cv2.Subtract(sourceImage, targetImage, difference);
-//
-//                Cv2.Split(difference, out var split);
-//                var r = split[0];
-//                var g = split[1];
-//                var b = split[2];
-//                var completeMatch = Cv2.CountNonZero(r) == 0 && Cv2.CountNonZero(g) == 0 && Cv2.CountNonZero(b) == 0;
-                var completeMatch = false;
-                if (completeMatch)
-                {
-                    var sb  = new StringBuilder();
-                    sb.AppendLine($"{DateTime.Now} Matching:");
-                    sb.AppendLine($"Source: {sourceFile}");
-                    sb.AppendLine($"Target: {targetFile}");
-                    sb.AppendLine($"Complete match");
-                    output.Add(sb.ToString());
+                    using var targetImage = CvInvoke.Imread(targetFile, ImreadModes.Grayscale);
+                    using var targetMat = new GpuMat();
+                    targetMat.Upload(targetImage);
 
-                    matchingFiles.Add(targetFile);
-                }
-                else
-                {
-                    var targetDescriptors = new Mat();
-                    detector.DetectAndCompute(targetImage, null, out var targetKeyPoints, targetDescriptors);
+                    //                using var difference = new Mat();
+                    //                Cv2.Subtract(sourceImage, targetImage, difference);
+                    //
+                    //                Cv2.Split(difference, out var split);
+                    //                var r = split[0];
+                    //                var g = split[1];
+                    //                var b = split[2];
+                    //                var completeMatch = Cv2.CountNonZero(r) == 0 && Cv2.CountNonZero(g) == 0 && Cv2.CountNonZero(b) == 0;
+                    using var targetDescriptors = new GpuMat();
+                    //var targetKeyPoints = new VectorOfKeyPoint();
+
+                    using var detector2 = new CudaORBDetector();
+                    var targetKeyPoints = detector2.Detect(targetMat, null);
+                    detector2.Compute(targetMat, new VectorOfKeyPoint(targetKeyPoints), targetDescriptors);
+                    //detector.DetectAndCompute(targetImage, null, targetKeyPoints, targetDescriptors, false);
 
                     // Needed to compensate for some crashes.
                     // See: https://stackoverflow.com/questions/25089393/opencv-flannbasedmatcher
-                    if (sourceKeyPoints.Length >= 2 && targetKeyPoints.Length >= 2) 
+                    if (sourceKeyPoints.Length >= 2 && targetKeyPoints.Length >= 2)
                     {
-                        var matches = matcher.KnnMatch(sourceDescriptors, targetDescriptors, KnnMatchValue);
-                        var goodPoints = matches == null
-                            ? Array.Empty<DMatch>()
-                            : matches
-                                .Where(match => match.Length > 1)
-                                .Where(match => match[0].Distance < match[1].Distance * MatchDistance)
-                                .Select(match => match[0])
-                                .ToArray();
+                        using var matches = new VectorOfVectorOfDMatch();
+                        using var matcher = new CudaBFMatcher(DistanceType.Hamming);
+                        matcher.KnnMatch(sourceDescriptors, targetDescriptors, matches, KnnMatchValue);
+                        var goodPoints = matches.ToArrayOfArray().Where(match => match.Length > 1)
+                            .Where(match => match[0].Distance < match[1].Distance * MatchDistance)
+                            //.Select(match => match[0])
+                            .ToArray();
 
                         var matchCount = sourceKeyPoints.Length >= targetKeyPoints.Length
                             ? sourceKeyPoints.Length
                             : targetKeyPoints.Length;
 
-                        var matchQuality = (float)goodPoints.Length / matchCount;
-                        
+                        var matchQuality = (float) goodPoints.Length / matchCount;
+
                         if (matchQuality >= MinimumMatchQuality)
                         {
-                            var outputImage = new Mat();
-                            Cv2.DrawMatches(sourceImage, sourceKeyPoints, targetImage, targetKeyPoints, goodPoints,
-                                outputImage);
-                            var scaledOutputImage = new Mat();
-                            Cv2.Resize(outputImage, scaledOutputImage, Size.Zero, 0.4f, 0.4f);
-                            Application.Current?.Dispatcher?.Invoke(() => { Cv2.ImShow(targetFile, scaledOutputImage); });
+                            using var outputImage = new Mat();
+                            using var scaledOutputImage = new Mat();
+                            Features2DToolbox.DrawMatches(
+                                sourceImage, new VectorOfKeyPoint(sourceKeyPoints),
+                                targetImage, new VectorOfKeyPoint(targetKeyPoints),
+                                new VectorOfVectorOfDMatch(goodPoints), outputImage,
+                                new Bgr(System.Drawing.Color.Yellow).MCvScalar,
+                                new Bgr(System.Drawing.Color.Red).MCvScalar);
+                            CvInvoke.Resize(outputImage, scaledOutputImage, System.Drawing.Size.Empty, 0.1f, 0.1f);
+                            Application.Current?.Dispatcher?.Invoke(() => CvInvoke.Imshow("Match preview", scaledOutputImage));
                             //Cv2.ImWrite(targetFile + ".comparison.jpg", scaledOutputImage);
 
                             var sb = new StringBuilder();
                             sb.AppendLine($"{DateTime.Now} Matching:");
                             sb.AppendLine($"Source: {sourceFile}");
                             sb.AppendLine($"Target: {targetFile}");
-                            sb.Append($"Match quality: {matchQuality}");
+                            sb.Append($"Match found with quality: {matchQuality}");
                             output.Add(sb.ToString());
                         }
                     }
+                }
+                catch (Exception e)
+                {
+                    var sb = new StringBuilder();
+                    var exception = e.ToString().Replace(Environment.NewLine," ");
+                    sb.Append($"{DateTime.Now} Unable to match file: {targetFile}: {exception}");
+                    output.Add(sb.ToString());
                 }
             });
         
