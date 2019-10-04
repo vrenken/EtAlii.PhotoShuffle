@@ -30,8 +30,9 @@ namespace EtAlii.PhotoShuffle
 
             var duplicatesToRemove = new List<string>();
 
-            foreach (var sourceFile in sourceFiles)
+            for(int i = 0; i < sourceFiles.Length; i++)
             {
+                var sourceFile = sourceFiles[i]; 
                 var matches = duplicationFindMethod switch
                 {
                     DuplicationFindMethod.FileName => FindFileNameMatches(sourceFile, targetFiles),
@@ -42,11 +43,11 @@ namespace EtAlii.PhotoShuffle
 
                 if (removeSmallerSourceFiles)
                 {
-                    matches = FindBiggerSizedMatches(sourceFile, matches);
+                    matches = FindBiggerSizedMatches(sourceFile, matches, output);
                 }
                 if (onlyMatchSimilarSizedFiles)
                 {
-                    matches = FindSimilarSizedMatches(sourceFile, matches);
+                    matches = FindSimilarSizedMatches(sourceFile, matches, output);
                 }
 
                 // Let's never ever delete the original file.
@@ -58,7 +59,7 @@ namespace EtAlii.PhotoShuffle
                 {
                     var sourceLength = new FileInfo(sourceFile).Length;
                     var sb = new StringBuilder();
-                    sb.AppendLine($"{DateTime.Now} Found match:");
+                    sb.AppendLine($"{DateTime.Now} Found match for {i} out of {sourceFiles.Length}:");
                     sb.AppendLine($"Source: {sourceFile} ({sourceLength} Bytes)");
                     foreach (var match in matches)
                     {
@@ -97,6 +98,14 @@ namespace EtAlii.PhotoShuffle
             return Task.CompletedTask;
         }
 
+        public void HandleError(Exception ex, ObservableCollection<string> output)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine(ex.Message);                    
+            sb.AppendLine(ex.StackTrace);                    
+            output.Add(sb.ToString());
+        }
+        
         private string[] FindMetaDataMatches(string sourceFile, string[] targetFiles)
         {
             var matches = new List<string>();
@@ -116,41 +125,70 @@ namespace EtAlii.PhotoShuffle
             return matches.ToArray();
         }
 
-        private string[] FindBiggerSizedMatches(string sourceFile, string[] matchingFiles)
+        private string[] FindBiggerSizedMatches(string sourceFile, string[] matchingFiles, ObservableCollection<string> output)
         {
             var matches = new List<string>();
-            
-            var sourceFileInfo = new FileInfo(sourceFile);
-            var sourceFileSize = sourceFileInfo.Length;
 
-            foreach (var matchingFile in matchingFiles)
+            try
             {
-                var fileNameMatchFileInfo = new FileInfo(matchingFile);
-                var fileNameMatchFileSize = fileNameMatchFileInfo.Length;
-                if (fileNameMatchFileSize > sourceFileSize && fileNameMatchFileSize != 0) // We don't want an empty file trigger the removal of a file with content.
+                var sourceFileInfo = new FileInfo(sourceFile);
+                var sourceFileSize = sourceFileInfo.Length;
+
+                foreach (var matchingFile in matchingFiles)
                 {
-                    matches.Add(matchingFile);
+                    try
+                    {
+                        var fileNameMatchFileInfo = new FileInfo(matchingFile);
+                        var fileNameMatchFileSize = fileNameMatchFileInfo.Length;
+                        if (fileNameMatchFileSize > sourceFileSize && fileNameMatchFileSize != 0) // We don't want an empty file trigger the removal of a file with content.
+                        {
+                            matches.Add(matchingFile);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        HandleError(e, output);
+                    }
                 }
             }
-
+            catch (Exception e)
+            {
+                HandleError(e, output);
+            }
+            
             return matches.ToArray();
         }
 
-        private string[] FindSimilarSizedMatches(string sourceFile, string[] matchingFiles)
+        private string[] FindSimilarSizedMatches(string sourceFile, string[] matchingFiles, ObservableCollection<string> output)
         {
             var matches = new List<string>();
-            
-            var sourceFileInfo = new FileInfo(sourceFile);
-            var sourceFileSize = sourceFileInfo.Length;
 
-            foreach (var matchingFile in matchingFiles)
+            try
             {
-                var fileNameMatchFileInfo = new FileInfo(matchingFile);
-                var fileNameMatchFileSize = fileNameMatchFileInfo.Length;
-                if (fileNameMatchFileSize == sourceFileSize && fileNameMatchFileSize != 0) // We don't want an empty file trigger the removal of a file with content.
+
+                var sourceFileInfo = new FileInfo(sourceFile);
+                var sourceFileSize = sourceFileInfo.Length;
+
+                foreach (var matchingFile in matchingFiles)
                 {
-                    matches.Add(matchingFile);
+                    try
+                    {
+                        var fileNameMatchFileInfo = new FileInfo(matchingFile);
+                        var fileNameMatchFileSize = fileNameMatchFileInfo.Length;
+                        if (fileNameMatchFileSize == sourceFileSize && fileNameMatchFileSize != 0) // We don't want an empty file trigger the removal of a file with content.
+                        {
+                            matches.Add(matchingFile);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        HandleError(e, output);
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                HandleError(e, output);
             }
 
             return matches.ToArray();
